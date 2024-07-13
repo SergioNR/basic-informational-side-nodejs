@@ -14,88 +14,28 @@ const server = http.createServer((req, res) => {
 
     // console.log(reqUrl.pathname); //* This will return the url portion of the request, ignoring all the query params
 
-    // TODO Might make more sense to check if the resource exists rather than check page by page? (eg: about.html, contact.html, etc)
 
-    fs.stat(`.${reqUrl.pathname}`, (err, stats) => {
+    fs.readFile(`.${reqUrl.pathname}`, 'utf8', (err, data) => {
         if (err) {
-            // console.log(err);
             res.writeHead(404, {
                 'Content-Type': 'text/html',
             }); //* Status 404 because the resource DOES NOT exist
 
             fs.readFile('404.html', 'utf8', (err, data) => {
             console.log(`requested file NOT exists: ${reqUrl.pathname}`);
+            console.log(res.statusCode)
             return res.end(data);
             });
         }
-
         else {
-            fs.readFile(`.${reqUrl.pathname}`, 'utf8', (err, data) => {
-                    console.log(`requested file YES exists: ${reqUrl.pathname}`);
-                    return res.end(data);
-            })
-        };
+            res.writeHead(200, {
+                'Content-Type': 'text/html',
+            }); //* Status 200 because the resource DOES exist
+            console.log(`requested file YES exists: ${reqUrl.pathname}`);
+            return res.end(data);
+        }
     });
 });
-
-    // switch (reqUrl.pathname) {
-    //     case '/about.html':
-    //         res.writeHead(200, {
-    //             'Content-Type': 'text/html',
-    //         }); //* Status 200 because the resource DOES exist
-    //         fs.readFile('about.html', 'utf8', (err, data) => {
-    //             if (err) {
-    //                 console.log(err);
-    //                 return;
-    //             }
-    //             else {
-    //             res.end(data);
-    //             };
-    //         });
-    //         break;
-    //     case '/contact-me.html':
-    //         res.writeHead(200, {
-    //             'Content-Type': 'text/html',
-    //         }); //* Status 200 because the resource DOES exist
-    //         fs.readFile('contact-me.html', 'utf8', (err, data) => {
-    //             if (err) {
-    //                 console.log(err);
-    //                 return;
-    //             }
-    //             else {
-    //             res.end(data);
-    //             };
-    //         });
-    //         break;
-    //     case '/index.html':
-    //         res.writeHead(200, {
-    //             'Content-Type': 'text/html',
-    //         }); //* Status 200 because the resource DOES exist
-    //         fs.readFile('index.html', 'utf8', (err, data) => {
-    //             if (err) {
-    //                 console.log(err);
-    //                 return;
-    //             }
-    //             else {
-    //             res.end(data);
-    //             };
-    //         });
-    //         break;
-    //     default:
-    //         res.writeHead(404, {
-    //             'Content-Type': 'text/html',
-    //         }); //* Status 404 because the resource DOES NOT exist
-    //         fs.readFile('404.html', 'utf8', (err, data) => {
-    //             if (err) {
-    //                 console.log(err);
-    //                 return;
-    //             }
-    //             else {
-    //             res.end(data);
-    //             };
-    //         });
-    //         break
-    // }
 
 server.listen(process.env.PORT || 3000, () => {
     console.log('Server is running')
