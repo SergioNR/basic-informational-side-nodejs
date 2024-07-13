@@ -16,29 +16,25 @@ const server = http.createServer((req, res) => {
 
     // TODO Might make more sense to check if the resource exists rather than check page by page? (eg: about.html, contact.html, etc)
 
-    if (reqUrl.pathname === '/about.html') { 
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
-        }); //* Status 200 because the resource DOES exist
-
-        // res.write('this is the about page'); //* Does not provide much use here -- commenting it out
-
-        fs.readFile('about.html', 'utf8', (err, data) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            else {
-            res.end(data);
-            };
-        });
-    }
-    else if (reqUrl.pathname === '/contact-me.html') {
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
-        }); //* Status 200 because the resource DOES exist
-
-        // res.write('this is the contact page'); //* Does not provide much use here -- commenting it out
+    switch (reqUrl.pathname) {
+        case '/about.html':
+            res.writeHead(200, {
+                'Content-Type': 'text/html',
+            }); //* Status 200 because the resource DOES exist
+            fs.readFile('about.html', 'utf8', (err, data) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else {
+                res.end(data);
+                };
+            });
+            break;
+        case '/contact-me.html':
+            res.writeHead(200, {
+                'Content-Type': 'text/html',
+            }); //* Status 200 because the resource DOES exist
             fs.readFile('contact-me.html', 'utf8', (err, data) => {
                 if (err) {
                     console.log(err);
@@ -48,42 +44,35 @@ const server = http.createServer((req, res) => {
                 res.end(data);
                 };
             });
-
-    }
-    else if (reqUrl.pathname === '/index.html') {
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
-        }); //* Status 200 because the resource DOES exist
-
-        // res.write('this is the index page'); //* Does not provide much use here -- commenting it out
-
-        fs.readFile('index.html', 'utf8', (err, data) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            else {
-            res.end(data);
-            };
-        });
-    }
-
-    else {
-        res.writeHead(404, {
-            'Content-Type': 'text/html',
-        }); //* Status 404 because the resource DOES NOT exist
-
-        // res.write('this is the 404 page'); //* Does not provide much use here -- commenting it out
-            
-        fs.readFile('404.html', 'utf8', (err, data) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            else {
-            res.end(data);
-            };
-        });
+            break;
+        case '/index.html':
+            res.writeHead(200, {
+                'Content-Type': 'text/html',
+            }); //* Status 200 because the resource DOES exist
+            fs.readFile('index.html', 'utf8', (err, data) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else {
+                res.end(data);
+                };
+            });
+            break;
+        default:
+            res.writeHead(404, {
+                'Content-Type': 'text/html',
+            }); //* Status 404 because the resource DOES NOT exist
+            fs.readFile('404.html', 'utf8', (err, data) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else {
+                res.end(data);
+                };
+            });
+            break
     }
 
 })
