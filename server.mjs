@@ -18,7 +18,7 @@ const server = http.createServer((req, res) => {
 
     if (reqUrl.pathname === '/about.html') { 
         res.writeHead(200, {
-            'Content-Type': 'text/plain',
+            'Content-Type': 'text/html',
         }); //* Status 200 because the resource DOES exist
 
         // res.write('this is the about page'); //* Does not provide much use here -- commenting it out
@@ -35,7 +35,7 @@ const server = http.createServer((req, res) => {
     }
     else if (reqUrl.pathname === '/contact-me.html') {
         res.writeHead(200, {
-            'Content-Type': 'text/plain',
+            'Content-Type': 'text/html',
         }); //* Status 200 because the resource DOES exist
 
         // res.write('this is the contact page'); //* Does not provide much use here -- commenting it out
@@ -52,7 +52,7 @@ const server = http.createServer((req, res) => {
     }
     else if (reqUrl.pathname === '/index.html') {
         res.writeHead(200, {
-            'Content-Type': 'text/plain',
+            'Content-Type': 'text/html',
         }); //* Status 200 because the resource DOES exist
 
         // res.write('this is the index page'); //* Does not provide much use here -- commenting it out
@@ -70,7 +70,7 @@ const server = http.createServer((req, res) => {
 
     else {
         res.writeHead(404, {
-            'Content-Type': 'text/plain',
+            'Content-Type': 'text/html',
         }); //* Status 404 because the resource DOES NOT exist
 
         // res.write('this is the 404 page'); //* Does not provide much use here -- commenting it out
@@ -99,7 +99,7 @@ server.listen(process.env.PORT || 3000, () => {
 4- deliver the desired content -- DONE
 - Read file contents from the file system using the node module  -- DONE
 - Send the file contents as the response  -- DONE
-- how to make it display in the browser rather than plain text 
+- how to make it display in the browser rather than plain text - DONE
 5- Need to add the logic to deliver a 404 status and page if the requested url is not available  -- DONE
 
 */
